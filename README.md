@@ -26,6 +26,10 @@ Other principles I think are necessary
 2) Chain of trust
 A Facebook group is associated with this app
 
+Other concerns
+1) Tragedy of the commons - can be alleviated by increasing communication between everyone using the app, and increasing trust between parties
+2) Bad actors/trolls - we will address this if the app gets popular enough to attract bad actors that for some reason want to distrupt this. Will likely need to add an authentication mechanism and denial of service attack prevention.
+
 ## Why travel by car instead of flight
 
 Flights, hotels and rental cars can be expensive. As dancers, we have an extensive network of friends and mutual friends across the world.
@@ -33,3 +37,37 @@ Flights, hotels and rental cars can be expensive. As dancers, we have an extensi
 We can leverage this network of trusted connections that you don't often find in other communities. Because there are so many dance styles, and some people attend mroe than one, its highly likely that you'll have some dancers (e.g. lindy hop) at their home scene, while others are travelling to their scene (WCS)
 
 Just make sure to bridge the divide with memes beforehand so that there's no animosity between groups.
+
+
+## Setup
+Get dependencies:
+go get .
+
+## Requirements/solutioning
+
+### Pass 1:
+- Backend
+Backend API server in Go, that has no authentication/authorization that lets any client create, read, update and delete map marker objects.
+
+Map markers in this application are a point on a map, centered on the city the user is interested in. The list of cities is obtained from the "Simple Maps" database: https://simplemaps.com/data/us-cities, where the list of cities is filtered to only those cities who population is over 5000
+
+This ensures that users aren't able to provide sensitive information that could let people identify vulnerable people that might be far from home.
+
+- Frontend
+Plain HTML, JS and CSS. fetch API makes network requests. 
+Open Street map for the map https://www.openstreetmap.org/
+
+Each marker is clickable, and displays the city name, anonymized identifier, date range, 
+
+The anonymized name is the exact code used in the names-generator.go package used in Docker:
+https://github.com/moby/moby/blob/39f7b2b6d0156811d9683c6cb0743118ae516a11/pkg/namesgenerator/names-generator.go#L852-L863
+
+Users will create markers, and would wait for someone on the facebook page to make a comment indicating that they are able to help them out. The user corresponding to that anonymous name will reach out to the person offering assistance.
+Both parties will verify trust by talking to their mutual friends who can vouch that they have seen them at dance events and can be trusted. Once this trust is established, they can make plans over Facebook or any other platform they prefer
+
+- Database
+Sqlite will be used
+
+- Deployment
+Deployed on Docker, with the sqlite folder math mounted as a persistent volume
+Nginx acts as reverse proxy to the go container, and serves static files associated with frontend
