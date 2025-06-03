@@ -1,6 +1,8 @@
 ## Inspiration
 
-Meme title: "How all-star dancers go to so many events"
+The inspiration for this application was a meme on a West Coast Swing group on Facebook 
+
+The Meme's title: "How all-star dancers go to so many events"
 
 Meme picture: A view from the back of an SUV, whose rear seats are replaced with a bed and a dressed, suggesting that the occupants sleep in their car.
 
