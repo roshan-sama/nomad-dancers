@@ -24,7 +24,7 @@ RUN CGO_ENABLED=1 GOOS=linux go build -a -installsuffix cgo -o main .
 FROM alpine:latest
 
 # Install sqlite3 for CGO compatibility
-RUN apk --no-cache add ca-certificates sqlite
+RUN apk --no-cache add ca-certificates sqlite curl
 
 # Set working directory
 WORKDIR /root/

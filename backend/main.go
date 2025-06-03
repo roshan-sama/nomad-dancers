@@ -85,7 +85,12 @@ func main() {
 		deleteMapMarker(c, db, markerId)
 	})
 
-	router.Run("localhost:8080")
+	log.Println("Starting server on localhost:8080")
+	if gin.Mode() == gin.ReleaseMode {
+		router.Run(":8080")
+	} else {
+		router.Run("localhost:8080")
+	}
 }
 
 func getAllMapMarkers(c *gin.Context, db *sql.DB) {
