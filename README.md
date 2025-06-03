@@ -44,6 +44,7 @@ Just make sure to bridge the divide with memes beforehand so that there's no ani
 ## Setup
 Get dependencies:
 go get .
+go mod tidy
 
 ## Requirements/solutioning
 
