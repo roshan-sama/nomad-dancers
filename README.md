@@ -1,6 +1,7 @@
 ## Inspiration
 
 Meme title: "How all-star dancers go to so many events"
+
 Meme picture: A view from the back of an SUV, whose rear seats are replaced with a bed and a dressed, suggesting that the occupants sleep in their car.
 
 These were real comments people made under that meme, and what inspired the creation of this site
