@@ -9,6 +9,7 @@ import (
 	"log"
 
 	"database/sql"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	_ "github.com/mattn/go-sqlite3"
 	ng "roshan.page/names-generator"
@@ -47,6 +48,15 @@ func main() {
 	initializeDb(db)
 
 	router := gin.Default()
+
+	router.Use(cors.New(cors.Config{
+		// TODO: Change to environment variable for prod
+		AllowOrigins: []string{"*"},
+		AllowMethods: []string{"PUT", "POST", "PATCH", "GET", "OPTIONS", "DELETE"},
+		AllowHeaders: []string{"*"},
+		MaxAge:       12 * time.Hour,
+	}))
+
 	router.GET("/mapMarker/all", func(c *gin.Context) {
 		getAllMapMarkers(c, db)
 	})
