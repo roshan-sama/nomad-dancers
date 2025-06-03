@@ -39,6 +39,11 @@ type dateRange struct {
 }
 
 func main() {
+	dbPath := os.Getenv("DATABASE_PATH")
+	if dbPath == "" {
+		dbPath = "./mapMarkers.db"
+	}
+
 	db, err := sql.Open("sqlite3", "./mapMarkers.db")
 	if err != nil {
 		log.Fatal(err)
