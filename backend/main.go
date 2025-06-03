@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"log"
+	"os"
 
 	"database/sql"
 	"github.com/gin-contrib/cors"
@@ -50,8 +51,8 @@ func main() {
 	router := gin.Default()
 
 	router.Use(cors.New(cors.Config{
-		// TODO: Change to environment variable for prod
-		AllowOrigins: []string{"*"},
+		// Only needs to support one origin at this time
+		AllowOrigins: []string{os.Getenv("CORS_ALLOW_ORIGIN")},
 		AllowMethods: []string{"PUT", "POST", "PATCH", "GET", "OPTIONS", "DELETE"},
 		AllowHeaders: []string{"*"},
 		MaxAge:       12 * time.Hour,

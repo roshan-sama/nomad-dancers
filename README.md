@@ -71,9 +71,12 @@ Both parties will verify trust by talking to their mutual friends who can vouch 
 - Database
 Sqlite will be used
 
-- Deployment
+## Deployment Instructions
 Deployed on Docker, with the sqlite folder math mounted as a persistent volume
 Nginx acts as reverse proxy to the go container, and serves static files associated with frontend
+Provide the following environment variables
+CORS_ALLOW_ORIGIN="https://foo.com" (set this to the url users access this at. Use localhost or * for local development)
+GIN_MODE=release
 
 TODO:
 - Timezone and time handling
