@@ -44,7 +44,7 @@ func main() {
 		dbPath = "./mapMarkers.db"
 	}
 
-	db, err := sql.Open("sqlite3", "./mapMarkers.db")
+	db, err := sql.Open("sqlite3", dbPath)
 	if err != nil {
 		log.Fatal(err)
 	}
