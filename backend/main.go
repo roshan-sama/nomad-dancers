@@ -13,9 +13,11 @@ import (
 	ng "roshan.page/names-generator"
 )
 
-// Do one thing, and do it will.
-// We'll add users, authentication and a whole lot else
-// if this app actually gains traction
+/*
+Map Marker is only data this app persists, and represents the duration and location of a nomad dancer's stay.
+
+This app will do one thing, and do it will. We'll add users, authentication and a whole lot else if this app actually gains traction
+*/
 type mapMarker struct {
 	ID string `json:"id"`
 	/* asdad*/
@@ -103,10 +105,7 @@ func getValidName() string {
 }
 
 /*
-	TODO: Remove this and manage the database through
-
-a more robust database version control system if we
-have users
+TODO: Remove this and manage the database through a more robust database version control system if we have users
 */
 func initializeDb(db *sql.DB) {
 	sqlStmt := `
