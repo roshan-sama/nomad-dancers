@@ -72,3 +72,11 @@ Sqlite will be used
 - Deployment
 Deployed on Docker, with the sqlite folder math mounted as a persistent volume
 Nginx acts as reverse proxy to the go container, and serves static files associated with frontend
+
+TODO:
+- Timezone and time handling
+The timezone used should correspond to the timezone of the location travellers will be in. The backend can skip timezone information since we are specifying location separately. Potential hosts might have an issue if they're examining dates from the frontend and Javascript is performing the time filtering. The new temporal API should help ease this, but its still experimental. The main issue is that the Javascript Date object doesn't have the concept of wall clock time or calendar date because Javascript has no concept of "no time zone"
+For example, most festival sites say their first dance is at Friday 6PM, and the final dance ends on Sunday at 11:30PM. The timezone used will be the timezone that the festival is located in. Travellers will likely enter a Start Date of Thursday or Friday, based on when they expect to arrive to the festival, and and end date of Monday in this accommodation app.
+They shouldn't need to specify explicitly what time on Thursday or Friday they arrive at, and our application's filter shouldn't be concerned with looking up the exact time or time zone of arrival and departure either.
+
+For now though, the backend uses RFC3339 to handle dates, but this will need to be changed to calendar dates instead

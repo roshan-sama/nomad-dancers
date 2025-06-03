@@ -2,7 +2,11 @@ module roshan.page/nomad-dancers
 
 go 1.24.3
 
-require github.com/gin-gonic/gin v1.10.1
+require (
+	github.com/gin-gonic/gin v1.10.1
+	github.com/mattn/go-sqlite3 v1.14.28
+	roshan.page/names-generator v0.0.0-00010101000000-000000000000
+)
 
 require (
 	github.com/bytedance/sonic v1.11.6 // indirect
@@ -32,3 +36,5 @@ require (
 	google.golang.org/protobuf v1.34.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
+
+replace roshan.page/names-generator => ./modules/names-generator
