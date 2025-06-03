@@ -216,20 +216,20 @@ func initializeDb(db *sql.DB) {
 		log.Fatal(err)
 	}
 
-	startDate := time.Now().Format(time.RFC3339)
-	// Example end date, dance festivals are usually 3-4 days long
-	endDate := time.Now().Add(time.Hour * 72).Format(time.RFC3339)
+	// startDate := time.Now().Format(time.RFC3339)
+	// // Example end date, dance festivals are usually 3-4 days long
+	// endDate := time.Now().Add(time.Hour * 72).Format(time.RFC3339)
 
-	sqlStmt = `
-        INSERT INTO mapMarker (SimpleMapsCityId, CityName, StartDate, EndDate, AnonymizedCreatorName)
-        VALUES (?, ?, ?, ?, ?);`
+	// sqlStmt = `
+	//     INSERT INTO mapMarker (SimpleMapsCityId, CityName, StartDate, EndDate, AnonymizedCreatorName)
+	//     VALUES (?, ?, ?, ?, ?);`
 
-	// NOTE: USE PARAMTERIZED QUERIES FOR ANY FIELD A USER CAN SPECIFY
-	//sqlStmt := `INSERT INTO mapMarker (SimpleMapsCityId, CityName) VALUES (?, ?)`
-	// _, err := db.Exec(sqlStmt, userInput.SimpleMapsCityId, userInput.CityName)
-	// This prevents Sql injection
-	_, err = db.Exec(sqlStmt, "1", "Baltimore", startDate, endDate, getValidName())
-	if err != nil {
-		log.Fatal(err)
-	}
+	// // NOTE: USE PARAMTERIZED QUERIES FOR ANY FIELD A USER CAN SPECIFY
+	// //sqlStmt := `INSERT INTO mapMarker (SimpleMapsCityId, CityName) VALUES (?, ?)`
+	// // _, err := db.Exec(sqlStmt, userInput.SimpleMapsCityId, userInput.CityName)
+	// // This prevents Sql injection
+	// _, err = db.Exec(sqlStmt, "1", "Baltimore", startDate, endDate, getValidName())
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
 }

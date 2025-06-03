@@ -82,3 +82,12 @@ For example, most festival sites say their first dance is at Friday 6PM, and the
 They shouldn't need to specify explicitly what time on Thursday or Friday they arrive at, and our application's filter shouldn't be concerned with looking up the exact time or time zone of arrival and departure either.
 
 For now though, the backend uses RFC3339 to handle dates, but this will need to be changed to calendar dates instead
+
+- Remove whitespace above map on frontend
+- Might need to switch to React because index.js is quite long. Will leave as is for now
+- Need to have added marker auto popup so that users can see the marker they just added (and close any other open markers)
+- Need to handle multiple markers on the same city. Might need to have them spaced slightly apart, or have 
+- Cron job to delete markers as their end date passes and they are no longer valid. Can add a grace period of one or two days after the end date that they are still visible for though
+- Need to mirror the requests to tile.openstreetmaps.org so that we're not pinging that server everytime. However, this caching could be a negative because that site might be more up to date than our cache. Might want to consider this further
+- Need to update cities list
+- Display number of markers already present in or near a city when a user types in that city's name
