@@ -20,12 +20,11 @@ Primary goal:
 Allow travelling dancers to connect with resources to aid with a nomadic lifestyle
 
 How I think this app can help
-1) Travelling dancers
+- Travelling dancers will add anonymized information related to their travel plans. Other users on an app like Facebook can offer to help these dancers
 
 Other principles I think are necessary
-1) Privacy - users don't specify names, instead get a two word identified when adding a pin to the map
-2) Chain of trust
-A Facebook group is associated with this app
+1) Privacy - users don't specify names, instead get a two word identifier when adding a pin to the map (similar to the Docker engine's container names)
+2) Chain of trust - A Facebook group is associated with this app, and the network of mutual friends that dancers have is extensive. Its very likely that you both know someone that can vouch for you both.
 
 Other concerns
 1) Tragedy of the commons - can be alleviated by increasing communication between everyone using the app, and increasing trust between parties
