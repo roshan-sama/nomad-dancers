@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"time"
 
 	"net/http"
@@ -50,12 +51,30 @@ func main() {
 		getAllMapMarkers(c, db)
 	})
 
+	router.POST("/mapMarker", func(c *gin.Context) {
+		var marker mapMarker
+		if err := c.ShouldBindJSON(&marker); err != nil {
+			c.IndentedJSON(http.StatusBadRequest, "Invalid JSON")
+			return
+		}
+		addMapMarker(c, db, &marker)
+	})
+
+	router.DELETE("/mapMarker", func(c *gin.Context) {
+		markerId := c.Query("markerId")
+		if markerId == "" {
+			c.IndentedJSON(http.StatusBadRequest, "markerId query parameter is required")
+			return
+		}
+		deleteMapMarker(c, db, markerId)
+	})
+
 	router.Run("localhost:8080")
 }
 
 func getAllMapMarkers(c *gin.Context, db *sql.DB) {
 	// TODO: Specify the actual row names so that row.Scan is in the correct order
-	sqlStmt := `SELECT * FROM mapMarkers;`
+	sqlStmt := `SELECT * FROM mapMarker;`
 
 	rows, err := db.Query(sqlStmt)
 
@@ -97,6 +116,70 @@ func getAllMapMarkers(c *gin.Context, db *sql.DB) {
 	c.IndentedJSON(http.StatusOK, markers)
 }
 
+func addMapMarker(c *gin.Context, db *sql.DB, marker *mapMarker) {
+	sqlStmt := `
+		INSERT INTO mapMarker (SimpleMapsCityId, CityName, StartDate, EndDate, AnonymizedCreatorName)
+		VALUES (?, ?, ?, ?, ?);
+	`
+
+	startDateStr := marker.StartDate.Format(time.RFC3339)
+	endDateStr := marker.EndDate.Format(time.RFC3339)
+	anonymizedName := getValidName()
+
+	result, err := db.Exec(sqlStmt, marker.SimpleMapsCityId, marker.CityName, startDateStr, endDateStr, anonymizedName)
+
+	if err != nil {
+		log.Print(err)
+		c.IndentedJSON(http.StatusInternalServerError, "Failed to create marker")
+		return
+	}
+
+	// Get the ID of the newly created marker
+	id, err := result.LastInsertId()
+	if err != nil {
+		log.Print(err)
+		c.IndentedJSON(http.StatusInternalServerError, "Failed to get created marker ID")
+		return
+	}
+
+	createdMarker := mapMarker{
+		ID:                    fmt.Sprintf("%d", id),
+		SimpleMapsCityId:      marker.SimpleMapsCityId,
+		CityName:              marker.CityName,
+		StartDate:             marker.StartDate,
+		EndDate:               marker.EndDate,
+		AnonymizedCreatorName: anonymizedName,
+	}
+
+	c.IndentedJSON(http.StatusCreated, createdMarker)
+}
+
+func deleteMapMarker(c *gin.Context, db *sql.DB, markerId string) {
+	sqlStmt := `DELETE FROM mapMarker WHERE ID = ?;`
+
+	result, err := db.Exec(sqlStmt, markerId)
+	if err != nil {
+		log.Print(err)
+		c.IndentedJSON(http.StatusInternalServerError, "Failed to delete marker")
+		return
+	}
+
+	// Check if any rows were affected (i.e., if the marker existed)
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		log.Print(err)
+		c.IndentedJSON(http.StatusInternalServerError, "Failed to verify deletion")
+		return
+	}
+
+	if rowsAffected == 0 {
+		c.IndentedJSON(http.StatusNotFound, "Marker not found")
+		return
+	}
+
+	c.IndentedJSON(http.StatusOK, gin.H{"message": "Marker deleted successfully"})
+}
+
 func getValidName() string {
 	// TODO: Ensure no duplicates by querying database for possible
 	// duplicate. Since users will be contacting each other, any confusion regarding
@@ -109,7 +192,7 @@ TODO: Remove this and manage the database through a more robust database version
 */
 func initializeDb(db *sql.DB) {
 	sqlStmt := `
-    CREATE TABLE IF NOT EXISTS mapMarkers (
+    CREATE TABLE IF NOT EXISTS mapMarker (
         ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
         SimpleMapsCityId TEXT,
 		CityName TEXT,
@@ -128,11 +211,11 @@ func initializeDb(db *sql.DB) {
 	endDate := time.Now().Add(time.Hour * 72).Format(time.RFC3339)
 
 	sqlStmt = `
-        INSERT INTO mapMarkers (SimpleMapsCityId, CityName, StartDate, EndDate, AnonymizedCreatorName)
+        INSERT INTO mapMarker (SimpleMapsCityId, CityName, StartDate, EndDate, AnonymizedCreatorName)
         VALUES (?, ?, ?, ?, ?);`
 
 	// NOTE: USE PARAMTERIZED QUERIES FOR ANY FIELD A USER CAN SPECIFY
-	//sqlStmt := `INSERT INTO mapMarkers (SimpleMapsCityId, CityName) VALUES (?, ?)`
+	//sqlStmt := `INSERT INTO mapMarker (SimpleMapsCityId, CityName) VALUES (?, ?)`
 	// _, err := db.Exec(sqlStmt, userInput.SimpleMapsCityId, userInput.CityName)
 	// This prevents Sql injection
 	_, err = db.Exec(sqlStmt, "1", "Baltimore", startDate, endDate, getValidName())
