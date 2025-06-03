@@ -87,6 +87,7 @@ func main() {
 
 	log.Println("Starting server on localhost:8080")
 	if gin.Mode() == gin.ReleaseMode {
+		// This assumes we're running in a docker container and are exposing all interfaces
 		router.Run(":8080")
 	} else {
 		router.Run("localhost:8080")
