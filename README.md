@@ -26,7 +26,7 @@ How I think this app can help
 
 Other principles I think are necessary
 1) Privacy - users don't specify names, instead get a two word identifier when adding a pin to the map (similar to the Docker engine's container names)
-2) Chain of trust - A Facebook group is associated with this app, and the network of mutual friends that dancers have is extensive. Its very likely that you both know someone that can vouch for you both.
+2) Chain of trust - A Facebook group is associated with this app, and the network of mutual friends that dancers have is extensive. Its very likely that you both know someone that can vouch for you both. For the nomad, their anonymous identifier preserves their privacy while any offerers can offer a bed or a shower. Nomads can look at the list of offerers, and if you have mutual friends, you can ask one of them to vouch for you both. This mutual would reach out to the offerer and inform them that they can vouch for the nomad, and that they will inform the nomad they vouch for the offerer too. Nomads should wait until their mutual has vouched for them with the offerer before contacting them.
 
 Other concerns
 1) Tragedy of the commons - can be alleviated by increasing communication between everyone using the app, and increasing trust between parties
