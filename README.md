@@ -94,3 +94,4 @@ For now though, the backend uses RFC3339 to handle dates, but this will need to 
 - Need to mirror the requests to tile.openstreetmaps.org so that we're not pinging that server everytime. However, this caching could be a negative because that site might be more up to date than our cache. Might want to consider this further
 - Need to update cities list
 - Display number of markers already present in or near a city when a user types in that city's name
+- In index.js, we need to automate the edit of API_BASE_URL from 'http://localhost:8080' to the deployment url
