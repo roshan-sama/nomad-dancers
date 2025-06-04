@@ -95,3 +95,5 @@ For now though, the backend uses RFC3339 to handle dates, but this will need to 
 - Need to update cities list
 - Display number of markers already present in or near a city when a user types in that city's name
 - In index.js, we need to automate the edit of API_BASE_URL from 'http://localhost:8080' to the deployment url
+- Deployment security: Currently, we're binding to all interfaces in gin conditionally, because I assume deployment occurs only via docker container. This needs to be edited to be a BIND_ADDRESS environment variable
+- Move GIN_MODE=release into the Dockerfile itself
